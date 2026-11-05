@@ -153,7 +153,26 @@
   function init() {
     $("#nav").innerHTML = NAV.map((p) => `<button class="nav" data-page="${p.id}">${p.icon}<span class="t">${p.name}</span></button>`).join("");
     document.querySelectorAll(".nav").forEach((n) => (n.onclick = () => go(n.dataset.page)));
-    $("#collapse").onclick = () => $("#app").classList.toggle("collapsed");
+    // Sidebar preference persistence
+const app = $("#app");
+const SIDEBAR_KEY = "voltix.sidebar.collapsed";
+
+// Restore the user's previous sidebar preference
+const savedSidebarState = localStorage.getItem(SIDEBAR_KEY);
+
+if (savedSidebarState === "true") {
+    app.classList.add("collapsed");
+}
+
+// Save the preference whenever the sidebar is toggled
+$("#collapse").onclick = () => {
+    const isCollapsed = app.classList.toggle("collapsed");
+
+    localStorage.setItem(
+        SIDEBAR_KEY,
+        String(isCollapsed)
+    );
+};
     $("#foot").innerHTML = `Source: Olist public e-commerce dataset (electronics categories), presented as the fictional VOLTIX brand. Cost, discount, channel, return, marketing and inventory fields are modelled. <button class="link" id="foot-m">Data &amp; methodology</button>`;
     $("#foot-m").onclick = showMethodology;
     buildFilters();
