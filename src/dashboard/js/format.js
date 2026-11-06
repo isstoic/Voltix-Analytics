@@ -33,8 +33,19 @@ window.Pages = window.Pages || {}; // page registry (pages self-register; app.js
     esc(s) { return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); },
     csvCell(v) {
       if (v === null || v === undefined) return "";
-      const s = String(v);
-      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+
+const s = String(v);
+
+// Prevent spreadsheet formula injection
+const safe = typeof v === "string" &&
+    /^[\s\u0000-\u001F]*[=+\-@]/.test(s)
+        ? "'" + s
+        : s;
+
+// Escape CSV special characters
+return /[",\r\n]/.test(safe)
+    ? '"' + safe.replace(/"/g, '""') + '"'
+    : safe;
     },
   };
   window.Fmt = Fmt;
