@@ -18,4 +18,40 @@ assert.strictEqual(Fmt.csvCell(-500), "-500");
 assert.strictEqual(Fmt.csvCell(null), "");
 assert.strictEqual(Fmt.csvCell("Hello, World"), '"Hello, World"');
 
-console.log("All 6 tests passed!");
+// Test 7: Formula beginning with @
+assert.strictEqual(
+    Fmt.csvCell("@SUM(A1:A5)"),
+    "'@SUM(A1:A5)"
+);
+
+// Test 8: Formula with leading whitespace
+assert.strictEqual(
+    Fmt.csvCell("  =1+1"),
+    "'  =1+1"
+);
+
+// Test 9: Negative number stored as a string
+assert.strictEqual(
+    Fmt.csvCell("-500"),
+    "'-500"
+);
+
+// Test 10: Undefined values
+assert.strictEqual(
+    Fmt.csvCell(undefined),
+    ""
+);
+
+// Test 11: Double quotation marks
+assert.strictEqual(
+    Fmt.csvCell('Hello "World"'),
+    '"Hello ""World"""'
+);
+
+// Test 12: Newline handling
+assert.strictEqual(
+    Fmt.csvCell("Hello\nWorld"),
+    '"Hello\nWorld"'
+);
+
+console.log("All 12 VOLTIX CSV tests passed!");
