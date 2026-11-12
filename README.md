@@ -121,3 +121,32 @@ targets are illustrative and non-seasonal (no real plan data); no impressions, c
 ## Suggested next steps
 Replace the simulated layer with real cost, ad-platform and inventory feeds; load real targets; build a Python notebook walkthrough and a Power BI/Excel reconciliation pack;
 add repeat-purchase propensity modelling; run a holdout test before using any ROAS number.
+
+## Running Tests
+
+VOLTIX includes automated tests for validating CSV formatting behaviour in the dashboard.
+
+### Prerequisites
+- Node.js installed on your system.
+
+### Run the tests
+
+From the project root, open a terminal and execute:
+
+```bash
+node tests/test_format.js
+```
+
+The test suite checks:
+- Normal text formatting.
+- CSV formula injection prevention.
+- Negative numeric values.
+- Null and undefined values.
+- Quotation mark escaping.
+- Newline handling.
+
+A successful run displays:
+
+```text
+All 12 VOLTIX CSV tests passed!
+```
