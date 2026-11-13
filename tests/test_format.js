@@ -53,5 +53,21 @@ assert.strictEqual(
     Fmt.csvCell("Hello\nWorld"),
     '"Hello\nWorld"'
 );
+// Test 13: Windows-style line endings (CRLF)
+assert.strictEqual(
+    Fmt.csvCell("Line 1\r\nLine 2"),
+    '"Line 1\r\nLine 2"'
+);
 
-console.log("All 12 VOLTIX CSV tests passed!");
+// Test 14: Tab-prefixed formula injection
+assert.strictEqual(
+    Fmt.csvCell("\t=1+1"),
+    "'\t=1+1"
+);
+
+// Test 15: Empty string
+assert.strictEqual(
+    Fmt.csvCell(""),
+    ""
+);
+console.log("All 15 VOLTIX CSV tests passed!");
